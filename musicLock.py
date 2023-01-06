@@ -27,7 +27,7 @@ noteD = mixer.Sound('sounds\\noteD.wav')
 noteC1 = mixer.Sound("sounds\\noteC1.wav")
 
 screen = pygame.display.set_mode([WIDTH, HEIGHT])
-pygame.display.set_caption('Music Key')
+pygame.display.set_caption('Music Lock')
 label_font = pygame.font.Font('Roboto-Bold.ttf', 28)
 medium_font = pygame.font.Font('Roboto-Bold.ttf', 20)
 beat_changed = True
@@ -56,25 +56,25 @@ def draw_grid(clicks, beat, actives):
     left_box = pygame.draw.rect(screen, gray, [0, 0, 80, HEIGHT], 5)
     # bottom_box = pygame.draw.rect(screen, gray, [0, HEIGHT - 150, WIDTH, 150], 5)
     for i in range(instruments + 1):
-        pygame.draw.line(screen, gray, (0, i * 60), (80, i * 60), 3)
+        pygame.draw.line(screen, gray, (0, i * (HEIGHT // 8)), (78, i * (HEIGHT // 8)), 3)
     colors = [gray, white, gray]
     # cajas de texto para instrumentos
     noteC2_text = label_font.render('C', True, colors[actives[0]])
-    screen.blit(noteC2_text, (30, 30))
+    screen.blit(noteC2_text, (30, 20))
     noteB_text = label_font.render('B', True, colors[actives[1]])
-    screen.blit(noteB_text, (30, 80))
+    screen.blit(noteB_text, (30, 90))
     noteA_text = label_font.render('A', True, colors[actives[2]])
-    screen.blit(noteA_text, (30, 130))
+    screen.blit(noteA_text, (30, 160))
     noteG_text = label_font.render('G', True, colors[actives[3]])
-    screen.blit(noteG_text, (30, 180))
+    screen.blit(noteG_text, (30, 230))
     noteF_text = label_font.render('F', True, colors[actives[4]])
-    screen.blit(noteF_text, (30, 230))
+    screen.blit(noteF_text, (30, 300))
     noteE_text = label_font.render('E', True, colors[actives[5]])
-    screen.blit(noteE_text, (30, 280))
+    screen.blit(noteE_text, (30, 370))
     noteD_text = label_font.render('D', True, colors[actives[6]])
-    screen.blit(noteD_text, (30, 330))
+    screen.blit(noteD_text, (30, 440))
     noteC1_text = label_font.render('C', True, colors[actives[7]])
-    screen.blit(noteC1_text, (30, 380))
+    screen.blit(noteC1_text, (30, 510))
     #dibuja cajas para inst
     for i in range(beats):
         for j in range(instruments):
@@ -86,16 +86,16 @@ def draw_grid(clicks, beat, actives):
                 else:
                     color = dark_gray
             rect = pygame.draw.rect(screen, color,
-                                    [i * ((WIDTH - 80) // beats) + 205, (j * 100) + 5, ((WIDTH - 80) // beats) - 10,
+                                    [i * ((WIDTH - 80) // beats) + 85, (j * 70) + 5, ((WIDTH - 80) // beats) - 10,
                                      90], 0, 3)
-            pygame.draw.rect(screen, gold, [i * ((WIDTH - 80) // beats) + 200, j * 100, ((WIDTH - 80) // beats), 100],
+            pygame.draw.rect(screen, gold, [i * ((WIDTH - 80) // beats) + 80, j * 70, ((WIDTH - 80) // beats), 70],
                              5, 5)
             pygame.draw.rect(screen, black,
-                             [i * ((WIDTH - 200) // beats) + 200, j * 100, ((WIDTH - 200) // beats), 100],
+                             [i * ((WIDTH - 80) // beats) + 80, j * 70, ((WIDTH - 80) // beats), 70],
                              2, 5)
             boxes.append((rect, (i, j)))
     active = pygame.draw.rect(screen, blue,
-                              [beat * ((WIDTH - 200) // beats) + 200, 0, ((WIDTH - 200) // beats), instruments * 100],
+                              [beat * ((WIDTH - 80) // beats) + 80, 0, ((WIDTH - 80) // beats), instruments * 70],
                               5, 3)
     return boxes
 
@@ -191,7 +191,7 @@ while run:
     screen.fill(black)
     boxes = draw_grid(clicked, active_beat, active_list)
     # drawing lower menu
-    # play_pause = pygame.draw.rect(screen, gray, [50, HEIGHT - 150, 200, 100], 0, 5)
+    play_pause = pygame.draw.rect(screen, gray, [50, HEIGHT - 150, 200, 100], 0, 5)
     # play_text = label_font.render('Play/Pause', True, white)
     # screen.blit(play_text, (70, HEIGHT - 130))
     # if playing:
@@ -237,7 +237,7 @@ while run:
     # instrument rectangles
     instrument_rects = []
     for i in range(instruments):
-        rect = pygame.rect.Rect((0, i * 100), (200, 100))
+        rect = pygame.rect.Rect((0, i * 70), (80, 70))
         instrument_rects.append(rect)
     if beat_changed:
         play_notes()
@@ -297,7 +297,7 @@ while run:
                     else:
                         typing = True
                 if load_menu:
-                    index = (event.pos[1] - 100) // 50
+                    index = (event.pos[1] - 70) // 50
             # if save_menu:
             #     if saving_button.collidepoint(event.pos):
             #         file = open('saved_beats.txt', 'w')
